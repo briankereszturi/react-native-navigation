@@ -1,6 +1,14 @@
 apply plugin: 'com.android.library'
 apply from: '../prepare-robolectric.gradle'
 
+allprojects {
+    repositories {
+        mavenLocal()
+        jcenter()
+        maven { url "https://jitpack.io" }
+    }
+}
+
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.1"
@@ -54,7 +62,7 @@ dependencies {
     compile "com.facebook.react:react-native:+"
 
     // third party
-    compile "com.aurelhubert:ahbottomnavigation:2.0.6"
+    compile "com.github.briankereszturi:ahbottomnavigation:5435667"
     compile 'com.balysv.materialmenu:material-menu-toolbar:1.5.4'
 
     // tests

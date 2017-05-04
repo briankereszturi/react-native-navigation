@@ -284,6 +284,13 @@ function addTabIcon(tab) {
     }
   }
 
+  if (tab.selectedIcon) {
+    const icon = resolveAssetSource(tab.selectedIcon);
+    if (icon) {
+      tab.selectedIcon = icon.uri;
+    }
+  }
+
   if (!tab.icon) {
     throw new Error("No icon defined for tab " + tab.screen);
   }

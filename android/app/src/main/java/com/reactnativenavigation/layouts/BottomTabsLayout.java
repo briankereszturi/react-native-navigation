@@ -373,6 +373,12 @@ public class BottomTabsLayout extends BaseLayout implements AHBottomNavigation.O
         }
 
         final int unselectedTabIndex = currentStackIndex;
+        ScreenParams screenParams = params.tabParams.get(position);
+        bottomTabs.getItem(unselectedTabIndex).setDrawable(screenParams.tabIcon);
+        if (screenParams.selectedTabIcon != null) {
+            bottomTabs.getItem(position).setDrawable(screenParams.selectedTabIcon);
+        }
+
         hideCurrentStack();
         showNewStack(position);
         EventBus.instance.post(new ScreenChangedEvent(getCurrentScreenStack().peek().getScreenParams()));

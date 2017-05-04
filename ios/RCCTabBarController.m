@@ -121,6 +121,9 @@
     NSDictionary *childLayout = tabItemLayout[@"children"][0];
     UIViewController *viewController = [RCCViewController controllerWithLayout:childLayout globalProps:globalProps bridge:bridge];
     if (!viewController) continue;
+
+    NSNumber *disableIconTintString = tabItemLayout[@"props"][@"disableIconTint"];
+    BOOL disableIconTint = disableIconTintString ? [ disableIconTintString boolValue ] : NO;
     
     // create the tab icon and title
     NSString *title = tabItemLayout[@"props"][@"title"];
@@ -129,7 +132,11 @@
     if (icon)
     {
       iconImage = [RCTConvert UIImage:icon];
-      if (buttonColor)
+      if (disableIconTint)
+      {
+        iconImage = [iconImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+      }
+      else if (buttonColor)
       {
         iconImage = [[self image:iconImage withColor:buttonColor] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
       }
@@ -138,6 +145,9 @@
     id selectedIcon = tabItemLayout[@"props"][@"selectedIcon"];
     if (selectedIcon) {
       iconImageSelected = [RCTConvert UIImage:selectedIcon];
+      if (disableIconTint) {
+        iconImageSelected = [iconImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+      }
     } else {
       iconImageSelected = [RCTConvert UIImage:icon];
     }
